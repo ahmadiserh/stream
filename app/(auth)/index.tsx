@@ -1,78 +1,87 @@
 import { Button } from "@/components/Button";
+import { useRouter } from 'expo-router';
 import { Text } from "@/components/Text";
 import { FontAwesome } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
+import { Stack } from "expo-router";
 
 export default function SignUpIndex() {
+  const router  = useRouter();
+
   return (
-    <View style={styles.container}>
-      {/* Top section */}
-      <View style={styles.topSection}>
-        <Text style={styles.titleText}>Sign up for Stream</Text>
-        <Text style={styles.subTitleText}>
-          Create a profile, follow other accounts, connect with friends and more.
-        </Text>
-      {/* </View>
+    <>
+      <Stack.Screen options={{ headerShown: false }} />
 
-      <View style={styles.buttonsSection}> */}
-        {/* Email */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="envelope" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Email</Text>
-          </View>
-        </Button>
+      <View style={styles.container}>
+        {/* Top section */}
+        <View style={styles.topSection}>
+          <Text style={styles.titleText}>Sign up for Stream</Text>
+          <Text style={styles.subTitleText}>
+            Create a profile, follow other accounts, connect with friends and more.
+          </Text>
+      
+          {/* Email */}
+          <Button
+            onPress={() => router.push("./sign-up-email")} 
+            style={styles.button}
+            >
+            <View style={styles.buttonContent}>
+              <FontAwesome name="envelope" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Email</Text>
+            </View>
+          </Button>
 
-        {/* Phone */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="phone" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Phone</Text>
-          </View>
-        </Button>
+          {/* Phone */}
+          <Button style={styles.button}>
+            <View style={styles.buttonContent}>
+              <FontAwesome name="phone" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Phone</Text>
+            </View>
+          </Button>
 
-        {/* Google */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="google" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Google</Text>
-          </View>
-        </Button>
+          {/* Google */}
+          <Button style={styles.button}>
+            <View style={styles.buttonContent}>
+              <FontAwesome name="google" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Google</Text>
+            </View>
+          </Button>
 
-        {/* Facebook */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="facebook" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Facebook</Text>
-          </View>
-        </Button>
+          {/* Facebook */}
+          <Button style={styles.button}>
+            <View style={styles.buttonContent}>
+              <FontAwesome name="facebook" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Facebook</Text>
+            </View>
+          </Button>
 
-        <Text style={styles.subTitleText}>
-          Already have an account?{" "}
-          <Pressable onPress={() => alert("Login clicked!")}>
-            <Text style={styles.linkText}>Login</Text>
-          </Pressable>
-        </Text>
+          <Text style={styles.subTitleText}>
+            Already have an account?{" "}
+            <Pressable onPress={() => alert("Login clicked!")}>
+              <Text style={styles.linkText}>Login</Text>
+            </Pressable>
+          </Text>
+
+        </View>
+
+        {/* <View style={styles.divider} /> */}
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.subTitleText}>
+            By continuing, you agree to Stream's{" "}
+            <Pressable onPress={() => alert("Terms of Service clicked!")}>
+              <Text style={styles.linkText}>Terms of Service</Text>
+            </Pressable>{" "}
+            and confirm that you have read Stream's{" "}
+            <Pressable onPress={() => alert("Privacy Policy clicked!")}>
+              <Text style={styles.linkText}>Privacy Policy</Text>
+            </Pressable>.
+          </Text>
+        </View>
 
       </View>
-
-      {/* <View style={styles.divider} /> */}
-
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.subTitleText}>
-          By continuing, you agree to Stream's{" "}
-          <Pressable onPress={() => alert("Terms of Service clicked!")}>
-            <Text style={styles.linkText}>Terms of Service</Text>
-          </Pressable>{" "}
-          and confirm that you have read Stream's{" "}
-          <Pressable onPress={() => alert("Privacy Policy clicked!")}>
-            <Text style={styles.linkText}>Privacy Policy</Text>
-          </Pressable>.
-        </Text>
-      </View>
-
-    </View>
+    </>
   );
 }
 
