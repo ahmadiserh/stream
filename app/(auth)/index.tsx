@@ -1,21 +1,20 @@
-import { View, StyleSheet, Pressable } from "react-native";
-import { Text } from "@/components/Text";
 import { Button } from "@/components/Button";
+import { Text } from "@/components/Text";
 import { FontAwesome } from "@expo/vector-icons";
+import { Pressable, StyleSheet, View } from "react-native";
 
 export default function SignUpIndex() {
   return (
     <View style={styles.container}>
       {/* Top section */}
       <View style={styles.topSection}>
-        <Text style={styles.titleText}>Stream Chat</Text>
+        <Text style={styles.titleText}>Sign up for Stream</Text>
         <Text style={styles.subTitleText}>
-          Simple, secure, and smart messaging
+          Create a profile, follow other accounts, connect with friends and more.
         </Text>
-      </View>
+      {/* </View>
 
-      {/* Continue with buttons */}
-      <View style={styles.buttonsSection}>
+      <View style={styles.buttonsSection}> */}
         {/* Email */}
         <Button style={styles.button}>
           <View style={styles.buttonContent}>
@@ -47,7 +46,17 @@ export default function SignUpIndex() {
             <Text style={styles.buttonText}>Continue with Facebook</Text>
           </View>
         </Button>
+
+        <Text style={styles.subTitleText}>
+          Already have an account?{" "}
+          <Pressable onPress={() => alert("Login clicked!")}>
+            <Text style={styles.linkText}>Login</Text>
+          </Pressable>
+        </Text>
+
       </View>
+
+      {/* <View style={styles.divider} /> */}
 
       {/* Footer */}
       <View style={styles.footer}>
@@ -61,16 +70,8 @@ export default function SignUpIndex() {
             <Text style={styles.linkText}>Privacy Policy</Text>
           </Pressable>.
         </Text>
-
-        <View style={styles.divider} />
-
-        <Text style={styles.subTitleText}>
-          Already have an account?{" "}
-          <Pressable onPress={() => alert("Login clicked!")}>
-            <Text style={styles.linkText}>Login</Text>
-          </Pressable>
-        </Text>
       </View>
+
     </View>
   );
 }
@@ -78,21 +79,23 @@ export default function SignUpIndex() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: "space-between", // Ensures space between sections
   },
   topSection: {
     alignItems: "center",
-    marginBottom: 32,
+    marginTop: 40,
   },
   titleText: {
     textAlign: "center",
-    fontSize: 32,
+    fontSize: 25,
     fontWeight: "bold",
   },
   subTitleText: {
     textAlign: "center",
     fontSize: 14,
     marginTop: 8,
+    marginBottom: 30,
+    paddingHorizontal: 20,
   },
   buttonsSection: {
     marginBottom: 32,
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
     width: "85%",
     paddingVertical: 12,
     borderRadius: 6,
-    marginVertical: 4,
+    marginVertical: 5,
   },
   buttonContent: {
     flexDirection: "row",
@@ -119,10 +122,10 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: "100%",
-    paddingVertical: 20,
-    paddingHorizontal: 24,
+    paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
+    marginBottom: 70, 
   },
   linkText: {
     textDecorationLine: "underline",
@@ -131,6 +134,5 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 1,
     backgroundColor: "#e0e0e0",
-    marginVertical: 8,
   },
 });
