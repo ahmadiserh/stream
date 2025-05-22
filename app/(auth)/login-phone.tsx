@@ -63,7 +63,7 @@ export default function SignUpIndex() {
 
           <Text style={styles.subTitleText}>
             Already have an account?{" "}
-            <Pressable onPress={() => router.push("./login-index")}>
+            <Pressable onPress={() => alert("Login clicked!")}>
               <Text style={styles.linkText}>Login</Text>
             </Pressable>
           </Text>

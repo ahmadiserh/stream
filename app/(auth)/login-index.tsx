@@ -18,9 +18,9 @@ export default function SignUpIndex() {
       <View style={styles.container}>
         {/* Top section */}
         <View style={styles.topSection}>
-          <Text style={styles.titleText}>Sign up for Stream</Text>
+          <Text style={styles.titleText}>Log in for Stream</Text>
           <Text style={styles.subTitleText}>
-            Create a profile, follow other accounts, connect with friends and more.
+            Manage your account, check notifications, comment on videos and more. 
           </Text>
       
           {/* Email */}
@@ -30,7 +30,7 @@ export default function SignUpIndex() {
             >
             <View style={styles.buttonContent}>
               <FontAwesome name="envelope" size={20} style={styles.icon} />
-              <Text style={styles.buttonText}>Continue with Email</Text>
+              <Text style={styles.buttonText}>Login with Email</Text>
             </View>
           </Button>
 
@@ -41,7 +41,7 @@ export default function SignUpIndex() {
             >
             <View style={styles.buttonContent}>
               <FontAwesome name="phone" size={20} style={styles.icon} />
-              <Text style={styles.buttonText}>Continue with Phone</Text>
+              <Text style={styles.buttonText}>Login with Phone</Text>
             </View>
           </Button>
 
@@ -62,9 +62,9 @@ export default function SignUpIndex() {
           </Button>
 
           <Text style={styles.subTitleText}>
-            Already have an account?{" "}
-            <Pressable onPress={() => router.push("./login-index")}>
-              <Text style={styles.linkText}>Login</Text>
+            Don't have an account?{" "}
+            <Pressable onPress={() => router.push("./index")}>
+              <Text style={styles.linkText}>Sign Up</Text>
             </Pressable>
           </Text>
 
