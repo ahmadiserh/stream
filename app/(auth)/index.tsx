@@ -79,7 +79,7 @@ export default function SignUpIndex() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "space-between", // Ensures space between sections
+    justifyContent: "space-between",
   },
   topSection: {
     alignItems: "center",
