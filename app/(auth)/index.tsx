@@ -2,74 +2,93 @@ import { View, StyleSheet, Pressable } from "react-native";
 import { Text } from "@/components/Text";
 import { Button } from "@/components/Button";
 import { FontAwesome } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 export default function SignUpIndex() {
   return (
     <View style={styles.container}>
-      {/* Top section */}
-      <View style={styles.topSection}>
-        <Text style={styles.titleText}>Stream Chat</Text>
-        <Text style={styles.subTitleText}>
-          Simple, secure, and smart messaging
-        </Text>
-      </View>
 
-      {/* Continue with buttons */}
-      <View style={styles.buttonsSection}>
-        {/* Email */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="envelope" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Email</Text>
-          </View>
-        </Button>
+      <View style={{ 
+        flex: 1,
+        justifyContent: 'center',
+        padding: 10
+       }} >
 
-        {/* Phone */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="phone" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Phone</Text>
-          </View>
-        </Button>
+        <View style={{ flex: 0.1 }} />
 
-        {/* Google */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="google" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Google</Text>
-          </View>
-        </Button>
+        {/* Top section */}
+        <View style={styles.topSection}>
+          <Text style={styles.titleText}>Stream Chat</Text>
+          <Text style={styles.subTitleText}>
+            Simple, secure, and smart messaging
+          </Text>
+        </View>
 
-        {/* Facebook */}
-        <Button style={styles.button}>
-          <View style={styles.buttonContent}>
-            <FontAwesome name="facebook" size={20} style={styles.icon} />
-            <Text style={styles.buttonText}>Continue with Facebook</Text>
-          </View>
-        </Button>
-      </View>
+        <View style={{ flex: 0.1 }} />
 
-      {/* Footer */}
-      <View style={styles.footer}>
-        <Text style={styles.subTitleText}>
-          By continuing, you agree to Stream's{" "}
-          <Pressable onPress={() => alert("Terms of Service clicked!")}>
-            <Text style={styles.linkText}>Terms of Service</Text>
-          </Pressable>{" "}
-          and confirm that you have read Stream's{" "}
-          <Pressable onPress={() => alert("Privacy Policy clicked!")}>
-            <Text style={styles.linkText}>Privacy Policy</Text>
-          </Pressable>.
-        </Text>
+        {/* Continue with buttons */}
+        <View style={styles.buttonsSection}>
+          {/* Email */}
+          <Button 
+            style={styles.button}
+            // onPress={router.push('/')}
+            >
+            <View style={styles.buttonContent}>
+              <FontAwesome name="envelope" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Email</Text>
+            </View>
+          </Button>
 
-        <View style={styles.divider} />
+          {/* Phone */}
+          <Button style={styles.button}>
+            <View style={styles.buttonContent}>
+              <FontAwesome name="phone" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Phone</Text>
+            </View>
+          </Button>
 
-        <Text style={styles.subTitleText}>
-          Already have an account?{" "}
-          <Pressable onPress={() => alert("Login clicked!")}>
-            <Text style={styles.linkText}>Login</Text>
-          </Pressable>
-        </Text>
+          {/* Google */}
+          <Button style={styles.button}>
+            <View style={styles.buttonContent}>
+              <FontAwesome name="google" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Google</Text>
+            </View>
+          </Button>
+
+          {/* Facebook */}
+          <Button style={styles.button}>
+            <View style={styles.buttonContent}>
+              <FontAwesome name="facebook" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Facebook</Text>
+            </View>
+          </Button>
+        </View>
+
+        <View style={{ flex: 0.1 }} />
+
+        {/* Footer */}
+        <View style={styles.footer}>
+          <Text style={styles.subTitleText}> By continuing, you agree to Stream's{" "}
+            
+            <Pressable onPress={() => alert("Terms of Service clicked!")}>
+              <Text style={styles.linkText}>Terms of Service</Text>
+            </Pressable>{" "}and confirm that you have read Stream's{" "}
+
+            <Pressable onPress={() => alert("Privacy Policy clicked!")}>
+              <Text style={styles.linkText}>Privacy Policy</Text>
+            </Pressable>.
+          </Text>
+
+          <View style={styles.divider} />
+
+          <Text style={styles.subTitleText}>
+            Already have an account?{" "}
+            <Pressable onPress={() => alert("Login clicked!")}>
+              <Text style={styles.linkText}>Login</Text>
+            </Pressable>
+          </Text>
+        </View>
+
       </View>
     </View>
   );
@@ -78,15 +97,13 @@ export default function SignUpIndex() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
   },
   topSection: {
-    alignItems: "center",
-    marginBottom: 32,
+    marginBottom: 52,
   },
   titleText: {
     textAlign: "center",
-    fontSize: 32,
+    fontSize: 28,
     fontWeight: "bold",
   },
   subTitleText: {
@@ -95,13 +112,13 @@ const styles = StyleSheet.create({
     marginTop: 8,
   },
   buttonsSection: {
-    marginBottom: 32,
+    marginBottom: 50,
   },
   button: {
     alignSelf: "center",
-    width: "85%",
+    width: "90%",
     paddingVertical: 12,
-    borderRadius: 6,
+    borderRadius: 8,
     marginVertical: 4,
   },
   buttonContent: {
@@ -119,8 +136,8 @@ const styles = StyleSheet.create({
   },
   footer: {
     width: "100%",
-    paddingVertical: 20,
-    paddingHorizontal: 24,
+    paddingVertical: 5,
+    paddingHorizontal: 3,
     alignItems: "center",
     justifyContent: "center",
   },
