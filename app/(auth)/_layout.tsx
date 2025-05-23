@@ -6,10 +6,10 @@ import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-export default function RootLayout() {
+export default function AuthLayout() {
   const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    'SpaceMono': require('../assets/fonts/SpaceMono-Regular.ttf'),
+    'SpaceMono': require('@/assets/fonts/SpaceMono-Regular.ttf'),
   });
 
   if (!loaded) {
@@ -18,12 +18,12 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack>
-        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen name="index" />
+        <Stack.Screen name="login-index" />
+        <Stack.Screen name="login-phone" />
+        <Stack.Screen name="sign-up-phone" />
+        <Stack.Screen name="sign-up-email" />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
   );
 }

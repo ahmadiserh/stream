@@ -27,48 +27,50 @@ export default function SignUpIndex() {
           <Button
             onPress={() => router.push("./sign-up-email")} 
             style={styles.button}
-          >
+            >
             <View style={styles.buttonContent}>
-              <FontAwesome name="envelope" size={20} color="#FF9800" style={styles.icon} />
+              <FontAwesome name="envelope" size={20} style={styles.icon} />
               <Text style={styles.buttonText}>Continue with Email</Text>
             </View>
           </Button>
 
           {/* Phone */}
           <Button 
-            onPress={() => router.push("/sign-up-phone")}
+            onPress={() => router.push("./sign-up-phone")}
             style={styles.button}
-          >
+            >
             <View style={styles.buttonContent}>
-              <FontAwesome name="phone" size={20} color="#4CAF50" style={styles.icon} />
+              <FontAwesome name="phone" size={20} style={styles.icon} />
               <Text style={styles.buttonText}>Continue with Phone</Text>
             </View>
           </Button>
 
           {/* Google */}
-          <Button style={[styles.button, { backgroundColor: '#ffffff', borderWidth: 1, borderColor: '#ddd' }]}>
+          <Button style={styles.button}>
             <View style={styles.buttonContent}>
-              <FontAwesome name="google" size={20} color="#DB4437" style={styles.icon} />
-              <Text style={[styles.buttonText, { color: '#000' }]}>Continue with Google</Text>
+              <FontAwesome name="google" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Google</Text>
             </View>
           </Button>
 
           {/* Facebook */}
-          <Button style={[styles.button, { backgroundColor: '#1877F2' }]}>
+          <Button style={styles.button}>
             <View style={styles.buttonContent}>
-              <FontAwesome name="facebook" size={20} color="#fff" style={styles.icon} />
-              <Text style={[styles.buttonText, { color: '#fff' }]}>Continue with Facebook</Text>
+              <FontAwesome name="facebook" size={20} style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Facebook</Text>
             </View>
           </Button>
 
           <Text style={styles.subTitleText}>
             Already have an account?{" "}
-            <Pressable onPress={() => router.push("./login-index")}>
+            <Pressable onPress={() => alert("Login clicked!")}>
               <Text style={styles.linkText}>Login</Text>
             </Pressable>
           </Text>
 
         </View>
+
+        {/* <View style={styles.divider} /> */}
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -96,7 +98,7 @@ const styles = StyleSheet.create({
   },
   topSection: {
     alignItems: "center",
-    marginTop: 90,
+    marginTop: 40,
   },
   titleText: {
     textAlign: "center",

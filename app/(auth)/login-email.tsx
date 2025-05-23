@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { View, TextInput, StyleSheet, useColorScheme, Pressable } from 'react-native';
 import { Text } from '@/components/Text';
-import { Stack, router } from 'expo-router';
+import { Stack } from 'expo-router';
 import { Button } from '@/components/Button';
 
-export default function PhoneSignUp() {
-  const [phone, setPhone] = useState('');
+export default function EmailSignUp() {
+  const [email, setEmail] = useState('');
   const colorScheme = useColorScheme(); // 👈 Detect dark or light mode
 
   const isDark = colorScheme === 'dark';
@@ -32,9 +32,9 @@ export default function PhoneSignUp() {
             marginBottom: 10, 
             color: isDark ? '#fff' : '#000' 
             }}>
+
            Welcome Back
         </Text>
-
         <Text
           style={{ 
             fontSize: 16,
@@ -45,7 +45,8 @@ export default function PhoneSignUp() {
             Log in to your account
         </Text>
 
-        {/* Phone Number Text Input */}
+
+        {/* Email Text Input */}
         <TextInput
           style={[
             styles.input,
@@ -55,13 +56,13 @@ export default function PhoneSignUp() {
               borderColor: isDark ? '#333' : '#ccc',
             },
           ]}
-          placeholder="Enter your phone number"
+          placeholder="Enter your email"
           placeholderTextColor={isDark ? '#888' : '#999'}
-          keyboardType="phone-number"
+          keyboardType="email-address"
           autoCapitalize="none"
-          autoCorrect={phone}
-          value={phone}
-          onChangeText={setPhone}
+          autoCorrect={false}
+          value={email}
+          onChangeText={setEmail}
         />
 
         {/* Terms, Services and Policy */}
@@ -84,9 +85,7 @@ export default function PhoneSignUp() {
         <Button style={{ 
             marginTop: 20,
             borderRadius: 7
-          }}
-          onPress={() => router.push('/(auth)/phone-opt')}
-          >
+          }}>
             <Text style={{ 
                 color: 'black',
                 textAlign: 'center',
@@ -105,11 +104,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-  },
-  label: {
-    marginBottom: 8,
-    fontSize: 16,
-    fontWeight: '500',
   },
   input: {
     borderWidth: 1,

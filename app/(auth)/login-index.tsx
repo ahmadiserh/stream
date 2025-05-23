@@ -23,54 +23,58 @@ export default function SignUpIndex() {
             Manage your account, check notifications, comment on videos and more. 
           </Text>
       
-          {/* Email */}
+         {/* Email */}
           <Button
-            onPress={() => router.push("./sign-up-email")} 
+            onPress={() => router.push("./login-email")} 
             style={styles.button}
-            >
+          >
             <View style={styles.buttonContent}>
-              <FontAwesome name="envelope" size={20} style={styles.icon} />
-              <Text style={styles.buttonText}>Login with Email</Text>
+              <FontAwesome name="envelope" size={20} color="#FF9800" style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Email</Text>
             </View>
           </Button>
 
           {/* Phone */}
           <Button 
-            onPress={() => router.push("./sign-up-phone")}
+            onPress={() => router.push("/login-phone")}
             style={styles.button}
-            >
+          >
             <View style={styles.buttonContent}>
-              <FontAwesome name="phone" size={20} style={styles.icon} />
-              <Text style={styles.buttonText}>Login with Phone</Text>
+              <FontAwesome name="phone" size={20} color="#4CAF50" style={styles.icon} />
+              <Text style={styles.buttonText}>Continue with Phone</Text>
             </View>
           </Button>
 
           {/* Google */}
-          <Button style={styles.button}>
+          <Button 
+            style={[styles.button, { backgroundColor: '#ffffff', borderWidth: 1, borderColor: '#ddd' }]
+            
+            }>
             <View style={styles.buttonContent}>
-              <FontAwesome name="google" size={20} style={styles.icon} />
-              <Text style={styles.buttonText}>Continue with Google</Text>
+              <FontAwesome name="google" size={20} color="#DB4437" style={styles.icon} />
+              <Text style={[styles.buttonText, { color: '#000' }]}>Continue with Google</Text>
             </View>
           </Button>
 
           {/* Facebook */}
-          <Button style={styles.button}>
+          <Button 
+              style={[styles.button, { backgroundColor: '#1877F2' }
+
+              ]}>
             <View style={styles.buttonContent}>
-              <FontAwesome name="facebook" size={20} style={styles.icon} />
-              <Text style={styles.buttonText}>Continue with Facebook</Text>
+              <FontAwesome name="facebook" size={20} color="#fff" style={styles.icon} />
+              <Text style={[styles.buttonText, { color: '#fff' }]}>Continue with Facebook</Text>
             </View>
           </Button>
 
           <Text style={styles.subTitleText}>
             Don't have an account?{" "}
-            <Pressable onPress={() => router.push("./index")}>
+            <Pressable onPress={() => router.push("/(auth)")}>
               <Text style={styles.linkText}>Sign Up</Text>
             </Pressable>
           </Text>
 
         </View>
-
-        {/* <View style={styles.divider} /> */}
 
         {/* Footer */}
         <View style={styles.footer}>
@@ -98,7 +102,7 @@ const styles = StyleSheet.create({
   },
   topSection: {
     alignItems: "center",
-    marginTop: 40,
+    marginTop: 90,
   },
   titleText: {
     textAlign: "center",

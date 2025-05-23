@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { View, TextInput, StyleSheet, useColorScheme, Pressable } from 'react-native';
 import { Text } from '@/components/Text';
-import { Stack } from 'expo-router';
+import { Stack, router } from 'expo-router';
 import { Button } from '@/components/Button';
 
 export default function PhoneSignUp() {
@@ -80,7 +80,9 @@ export default function PhoneSignUp() {
                 color: 'black',
                 textAlign: 'center',
                 fontWeight: 600
-             }}>
+             }}
+            onPress={() => router.push('/(auth)/phone-opt')}
+             >
                 Send Code
             </Text>
         </Button>
