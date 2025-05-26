@@ -1,3 +1,6 @@
+import React, { useEffect } from 'react';
+import { AppState } from 'react-native';
+import * as Updates from 'expo-updates';
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
@@ -12,8 +15,34 @@ export default function RootLayout() {
     'SpaceMono': require('../assets/fonts/SpaceMono-Regular.ttf'),
   });
 
+  // Silent update check function
+  async function checkForUpdatesSilently() {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        console.log('Update downloaded silently.');
+      }
+    } catch (e) {
+      console.log('Error checking for updates:', e);
+    }
+  }
+
+  useEffect(() => {
+    checkForUpdatesSilently();
+
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      if (nextAppState === 'active') {
+        checkForUpdatesSilently();
+      }
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   if (!loaded) {
-    // Async font loading only occurs in development.
     return null;
   }
 
