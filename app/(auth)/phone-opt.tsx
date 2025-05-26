@@ -11,11 +11,6 @@ export default function SignUpIndex() {
   const colorScheme = useColorScheme(); // 👈 Detect dark or light mode
   const isDark = colorScheme === 'dark';
   // const [phone, setPhone] = useState('');
-  
-
-  const handleSignUpWithGoggle = () => {}
-  const handleSignUpWithFacebook = () => {}
-
   return (
     <>
       <Stack.Screen options={{ headerShown: false }} />
