@@ -1,43 +1,75 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Button } from "@/components/Button";
-import { useRouter } from 'expo-router';
+import { useRouter, useLocalSearchParams } from 'expo-router';
 import { Text } from "@/components/Text";
-import { FontAwesome } from "@expo/vector-icons";
 import { Pressable, StyleSheet, TextInput, View, useColorScheme } from "react-native";
 import { Stack } from "expo-router";
 
-export default function SignUpIndex() {
+export default function phoneOtp() {
   const router = useRouter();
   const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
   const [otp, setOtp] = useState('');
+  const { phone } = useLocalSearchParams();
+
+  const [resendEnabled, setResendEnabled] = useState(false);
+  const [timer, setTimer] = useState(60);
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (timer > 0) {
+      interval = setInterval(() => {
+        setTimer((prev) => prev - 1);
+      }, 1000);
+    } else {
+      setResendEnabled(true);
+    }
+
+    return () => clearInterval(interval);
+  }, [timer]);
+
+  const handleVerify = () => {
+    if (otp.length !== 4) return;
+    alert(`Verifying OTP: ${otp}`);
+    // TODO: Verify OTP with backend
+  };
+
+  const handleLoginWithPassword = () => {
+    router.push('/login');
+  };
+
+  const handleResendCode = () => {
+    if (!resendEnabled) return;
+    alert('Code resent!');
+    setResendEnabled(false);
+    setTimer(60);
+    // TODO: Trigger resend code API
+  };
 
   return (
     <>
-        <Stack.Screen 
-          options={{ 
-            title: '',
-            headerBackTitleVisible: true,
-            headerStyle: {
-              height: 40,
-              backgroundColor: isDark ? '#121212' : '#fff',
-              elevation: 0,
-              shadowOpacity: 0,
-            },
-          }} 
-        />
+      <Stack.Screen 
+        options={{ 
+          title: '',
+          headerBackTitleVisible: true,
+          headerStyle: {
+            height: 40,
+            backgroundColor: isDark ? '#121212' : '#fff',
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        }} 
+      />
 
-      <View style={styles.container}>
-        {/* Top section */}
-        <View style={styles.topSection}>
-          <Text style={{ fontSize: 18, fontWeight: "700" }}>
+      <View style={[styles.container, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
+        <View>
+          <Text style={{ fontSize: 18, fontWeight: "700", color: isDark ? '#fff' : '#000' }}>
             Enter 4 digits code
           </Text>
-          <Text style={styles.subTitleText}>
-            Your code was sent to +234 8066358744 via text message or WhatsApp.
+          <Text style={[styles.subTitleText, { color: isDark ? '#aaa' : '#333' }]}>
+            Your code was sent to {phone} via text message or WhatsApp.
           </Text>
 
-          {/* Phone Number Text Input */}
           <TextInput
             style={[
               styles.input,
@@ -52,23 +84,37 @@ export default function SignUpIndex() {
             keyboardType="phone-pad"
             autoCapitalize="none"
             autoCorrect={false}
+            maxLength={4}
             value={otp}
             onChangeText={setOtp}
           />
         </View>
 
-        {/* Footer */}
-        <View style={styles.footer}>
-          <Text style={styles.subTitleText}>
-            By continuing, you agree to Stream's{" "}
-            <Pressable onPress={() => alert("Terms of Service clicked!")}>
-              <Text style={styles.linkText}>Terms of Service</Text>
-            </Pressable>{" "}
-            and confirm that you have read Stream's{" "}
-            <Pressable onPress={() => alert("Privacy Policy clicked!")}>
-              <Text style={styles.linkText}>Privacy Policy</Text>
-            </Pressable>.
-          </Text>
+        {/* Button Section */}
+        <View style={styles.buttonsSection}>
+          <Button
+            style={styles.button}
+            onPress={handleVerify}
+            disabled={otp.length !== 4}
+          >
+            <Text style={styles.buttonText}>Verify OTP</Text>
+          </Button>
+
+          {/* Footer Links */}
+          <View style={styles.footer}>
+            <Pressable onPress={handleLoginWithPassword}>
+              <Text style={[styles.linkText, { color: '#007aff' }]}>Login with password</Text>
+            </Pressable>
+
+            <Pressable onPress={handleResendCode} disabled={!resendEnabled}>
+              <Text style={[
+                styles.linkText,
+                { color: resendEnabled ? '#007aff' : '#999' }
+              ]}>
+                {resendEnabled ? 'Resend Code' : `Resend in ${timer}s`}
+              </Text>
+            </Pressable>
+          </View>
         </View>
       </View>
     </>
@@ -78,62 +124,40 @@ export default function SignUpIndex() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-  },
-  topSection: {
-    // marginTop: 40,
-  },
-  titleText: {
-    fontSize: 25,
-    fontWeight: "bold",
+    padding: 15,
   },
   subTitleText: {
-    fontSize: 14,
+    fontSize: 13,
     marginTop: 8,
-    marginBottom: 30,
+    marginBottom: 15,
   },
   buttonsSection: {
-    marginBottom: 32,
+    marginTop: 10,
   },
   button: {
     alignSelf: "center",
-    width: "85%",
-    paddingVertical: 12,
-    borderRadius: 6,
+    borderRadius: 8,
     marginVertical: 5,
-  },
-  buttonContent: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
   },
   buttonText: {
     fontSize: 14,
     color: "black",
     fontWeight: "bold",
-  },
-  icon: {
-    marginRight: 10,
-  },
-  footer: {
-    width: "100%",
-    paddingHorizontal: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    // marginBottom: 70, 
-  },
-  linkText: {
-    textDecorationLine: "underline",
-  },
-  divider: {
-    width: "100%",
-    height: 1,
-    backgroundColor: "#e0e0e0",
+    textAlign: 'center',
   },
   input: {
     borderWidth: 1,
     padding: 12,
     borderRadius: 6,
     fontSize: 16,
+  },
+  footer: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  linkText: {
+    textDecorationLine: "underline",
+    fontSize: 13,
   },
 });

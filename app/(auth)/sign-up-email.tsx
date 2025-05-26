@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { View, TextInput, StyleSheet, useColorScheme, Pressable, Animated, ActivityIndicator } from 'react-native';
 import { Text } from '@/components/Text';
-import { Stack } from 'expo-router';
+import { Stack, router} from 'expo-router';
 import { Button } from '@/components/Button';
 
 export default function EmailSignUp() {
@@ -38,7 +38,10 @@ export default function EmailSignUp() {
     setTimeout(() => {
       setLoading(false);
       console.log('Sign-up email sent:', email);
-      // Navigate to next screen
+        router.push({
+          pathname: '/(auth)/email-otp',
+          params: { email: email}, // Assuming email is the next step
+        });
     }, 2000);
   };
 

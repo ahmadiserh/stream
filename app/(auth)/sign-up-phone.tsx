@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { View, TextInput, StyleSheet, useColorScheme, Pressable } from 'react-native';
+import { View, TextInput, StyleSheet, useColorScheme, Pressable, ActivityIndicator } from 'react-native';
 import { Text } from '@/components/Text';
 import { Stack, router } from 'expo-router';
 import { Button } from '@/components/Button';
@@ -11,6 +11,7 @@ export default function PhoneSignUp() {
   const [phone, setPhone] = useState('');
   const [error, setError] = useState('');
   const [isValid, setIsValid] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   // Format and validate
   const formatPhoneNumber = (input: string): string => {
@@ -102,12 +103,16 @@ export default function PhoneSignUp() {
           </Text>
         </View>
 
+        {/* Submit Button */}
         <Button
-          disabled={!isValid}
+          disabled={!isValid || loading}
           style={{
             marginTop: 20,
             borderRadius: 7,
             opacity: isValid ? 1 : 0.5,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
           onPress={() => {
             if (!validatePhoneNumber(phone)) {
@@ -115,21 +120,34 @@ export default function PhoneSignUp() {
               return;
             }
 
-            const fullPhone = formatPhoneNumber(phone);
-            router.push({
-              pathname: '/(auth)/phone-otp',
-              params: { phone: fullPhone },
-            });
+            setLoading(true); // Start loading
+
+            const fullPhone = `+234${phone}`;
+
+            setTimeout(() => {
+              setLoading(false); // Optional: Stop loading right before navigation
+              router.push({
+                pathname: '/(auth)/phone-otp',
+                params: { phone: fullPhone },
+              });
+            }, 1500); // 1.5 seconds delay
           }}
         >
-          <Text style={{
-            color: 'black',
-            textAlign: 'center',
-            fontWeight: '600',
-          }}>
-            Send Code
-          </Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="black" />
+          ) : (
+            <Text
+              style={{
+                color: 'black',
+                textAlign: 'center',
+                fontWeight: '600',
+              }}
+            >
+              Send Code
+            </Text>
+          )}
         </Button>
+
       </View>
     </>
   );
