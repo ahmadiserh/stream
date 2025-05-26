@@ -139,7 +139,7 @@ export default function PhoneSignUp() {
           style={{
             marginTop: 20,
             borderRadius: 7,
-            opacity: isValid ? 1 : 0.5, // visually show it's disabled
+            opacity: isValid ? 1 : 0.5,
           }}
           onPress={() => {
             if (!validatePhoneNumber(phone)) {

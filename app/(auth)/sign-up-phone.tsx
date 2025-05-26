@@ -1,92 +1,135 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { View, TextInput, StyleSheet, useColorScheme, Pressable } from 'react-native';
 import { Text } from '@/components/Text';
 import { Stack, router } from 'expo-router';
 import { Button } from '@/components/Button';
 
 export default function PhoneSignUp() {
-  const [phone, setPhone] = useState('');
-  const colorScheme = useColorScheme(); // 👈 Detect dark or light mode
-
+  const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
+
+  const [phone, setPhone] = useState('');
+  const [error, setError] = useState('');
+  const [isValid, setIsValid] = useState(false);
+
+  // Format and validate
+  const formatPhoneNumber = (input: string): string => {
+    const trimmed = input.replace(/\D/g, '');
+    if (trimmed.startsWith('0')) return '+234' + trimmed.slice(1);
+    if (trimmed.startsWith('234')) return '+' + trimmed;
+    if (trimmed.startsWith('+234')) return trimmed;
+    return '+234' + trimmed;
+  };
+
+  const validatePhoneNumber = (input: string) => /^[789][01]\d{8}$/.test(input);
+
+  useEffect(() => {
+    setIsValid(validatePhoneNumber(phone));
+  }, [phone]);
 
   return (
     <>
-      <Stack.Screen 
-        options={{ 
+      <Stack.Screen
+        options={{
           title: '',
-          headerBackTitleVisible: false,
+          headerBackTitleVisible: true,
           headerStyle: {
             height: 40,
             backgroundColor: isDark ? '#121212' : '#fff',
             elevation: 0,
             shadowOpacity: 0,
           },
-        }} 
+        }}
       />
 
       <View style={[styles.container, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
-        <Text style={{ 
-            fontSize: 20,
-            fontWeight: '700', 
-            marginBottom: 20, 
-            color: isDark ? '#fff' : '#000' 
-            }}>
-
+        <Text style={{
+          fontSize: 25,
+          fontWeight: '700',
+          marginBottom: 5,
+          color: isDark ? '#fff' : '#000',
+        }}>
           Sign Up
         </Text>
 
-        {/* Phone Number Text Input */}
-        <TextInput
-          style={[
-            styles.input,
-            {
-              backgroundColor: isDark ? '#1e1e1e' : '#fff',
-              color: isDark ? '#fff' : '#000',
-              borderColor: isDark ? '#333' : '#ccc',
-            },
-          ]}
-          placeholder="Enter your phone number"
-          placeholderTextColor={isDark ? '#888' : '#999'}
-          keyboardType="phone-number"
-          autoCapitalize="none"
-          autoCorrect={phone}
-          value={phone}
-          onChangeText={setPhone}
-        />
-
-        {/* Terms, Services and Policy */}
-        <Text style={{ 
-             textAlign: "center",
-             fontSize: 12,
-             marginTop: 15,
-          }}>
-            By continuing, you agree to Stream's{" "}
-            <Pressable onPress={() => alert("Terms of Service clicked!")}>
-            <Text style={styles.linkText}>Terms of Service</Text>
-            </Pressable>{" "}
-            and confirm that you have read Stream's{" "}
-            <Pressable onPress={() => alert("Privacy Policy clicked!")}>
-            <Text style={styles.linkText}>Privacy Policy</Text>
-            </Pressable>.
+        <Text style={{
+          fontSize: 16,
+          color: isDark ? '#fff' : '#000',
+          marginBottom: 10,
+        }}>
+          Create a new account
         </Text>
 
-        {/* send button */}
-        <Button style={{ 
-            marginTop: 20,
-            borderRadius: 7
-          }}>
-            <Text style={{ 
-                color: 'black',
-                textAlign: 'center',
-                fontWeight: 600
-             }}
-            onPress={() => router.push('/(auth)/phone-opt')}
-             >
-                Send Code
-            </Text>
-        </Button>
+        <View style={[styles.inputContainer, {
+          backgroundColor: isDark ? '#1e1e1e' : '#fff',
+          borderColor: isDark ? '#333' : '#ccc',
+          borderWidth: 1,
+        }]}>
+          <Text style={[styles.prefix, { color: isDark ? '#fff' : '#000' }]}>+234</Text>
 
+          <TextInput
+            style={[styles.input, { color: isDark ? '#fff' : '#000' }]}
+            placeholder="Enter phone number"
+            placeholderTextColor={isDark ? '#888' : '#999'}
+            keyboardType="phone-pad"
+            autoCapitalize="none"
+            value={phone}
+            onChangeText={(text) => {
+              setPhone(text.replace(/\D/g, ''));
+              if (error) setError('');
+            }}
+            maxLength={10}
+          />
+        </View>
+
+        {error && <Text style={{ color: 'red', marginTop: 5 }}>{error}</Text>}
+
+        <View style={{ marginTop: 15, paddingHorizontal: 5 }}>
+          <Text style={{
+            textAlign: 'center',
+            fontSize: 12,
+            color: isDark ? '#aaa' : '#333',
+            lineHeight: 18,
+          }}>
+            By continuing, you agree to Stream's{' '}
+            <Text onPress={() => alert('Terms of Service clicked!')} style={styles.linkText}>
+              Terms of Service
+            </Text>{' '}
+            and confirm that you have read Stream's{' '}
+            <Text onPress={() => alert('Privacy Policy clicked!')} style={styles.linkText}>
+              Privacy Policy
+            </Text>.
+          </Text>
+        </View>
+
+        <Button
+          disabled={!isValid}
+          style={{
+            marginTop: 20,
+            borderRadius: 7,
+            opacity: isValid ? 1 : 0.5,
+          }}
+          onPress={() => {
+            if (!validatePhoneNumber(phone)) {
+              setError('Please enter a valid Nigerian phone number');
+              return;
+            }
+
+            const fullPhone = formatPhoneNumber(phone);
+            router.push({
+              pathname: '/(auth)/phone-otp',
+              params: { phone: fullPhone },
+            });
+          }}
+        >
+          <Text style={{
+            color: 'black',
+            textAlign: 'center',
+            fontWeight: '600',
+          }}>
+            Send Code
+          </Text>
+        </Button>
       </View>
     </>
   );
@@ -95,20 +138,27 @@ export default function PhoneSignUp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    paddingHorizontal: 15,
   },
-  label: {
-    marginBottom: 8,
+  inputContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 12,
+    paddingVertical: 3,
+    borderRadius: 6,
+    marginTop: 10,
+  },
+  prefix: {
     fontSize: 16,
     fontWeight: '500',
+    marginRight: 6,
   },
   input: {
-    borderWidth: 1,
-    padding: 12,
-    borderRadius: 6,
+    flex: 1,
     fontSize: 16,
   },
   linkText: {
-    textDecorationLine: "underline",
+    textDecorationLine: 'underline',
+    color: '#007aff',
   },
 });

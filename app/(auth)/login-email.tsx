@@ -1,25 +1,46 @@
-import { useState } from 'react';
-import { View, TextInput, StyleSheet, useColorScheme, Pressable } from 'react-native';
+import { useState, useRef } from 'react';
+import { View, TextInput, StyleSheet, useColorScheme, Pressable, Animated, ActivityIndicator } from 'react-native';
 import { Text } from '@/components/Text';
 import { Stack } from 'expo-router';
 import { Button } from '@/components/Button';
 
 export default function EmailSignUp() {
   const [email, setEmail] = useState('');
-  const colorScheme = useColorScheme(); // 👈 Detect dark or light mode
-
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
 
-  const [error, setError] = useState('');
+  const errorOpacity = useRef(new Animated.Value(0)).current;
 
-  // ✅ Validate email format
   const isValidEmail = (email: string): boolean => {
     const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return pattern.test(email);
   };
 
-  
+  const isValid = isValidEmail(email);
 
+  const handleSend = () => {
+    if (!isValidEmail(email)) {
+      setError('Please enter a valid email address');
+      Animated.timing(errorOpacity, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+      return;
+    }
+
+    setError('');
+    setLoading(true);
+
+    // Simulate a request delay
+    setTimeout(() => {
+      setLoading(false);
+      console.log('Email sent:', email);
+      // Navigate to next screen here
+    }, 2000);
+  };
 
   return (
     <>
@@ -73,12 +94,26 @@ export default function EmailSignUp() {
           autoCapitalize="none"
           autoCorrect={false}
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => {
+            setEmail(text);
+          
+            if (isValidEmail(text)) {
+              setError('');
+              Animated.timing(errorOpacity, {
+                toValue: 0,
+                duration: 200,
+                useNativeDriver: true,
+              }).start();
+            }
+          }}
+          
         />
 
         {error !== '' && (
-          <Text style={{ color: 'red', marginTop: 5, fontSize: 10 }}>{error}</Text>
-        )} 
+          <Animated.View style={{ opacity: errorOpacity }}>
+            <Text style={{ color: 'red', marginTop: 5, fontSize: 10 }}>{error}</Text>
+          </Animated.View>
+        )}
 
         {/* Terms, Services and Policy */}
         <View style={{ marginTop: 10, paddingHorizontal: 5 }}>
@@ -101,31 +136,25 @@ export default function EmailSignUp() {
 
         {/* send button */}
         <Button
-          style={[
-            {
-              marginTop: 20,
-              borderRadius: 7,
-              backgroundColor: isValidEmail(email) ? '#00f' : '#ccc', // active vs disabled
-            }
-          ]}
-          onPress={() => {
-            if (!isValidEmail(email)) {
-              setError('Please enter a valid email address');
-              return;
-            }
-            setError('');
-            console.log('Email:', email);
-            // Proceed to OTP or next step
+          style={{
+            marginTop: 20,
+            borderRadius: 7,
+            opacity: isValid && !loading ? 1 : 0.5,
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingVertical: 12,
           }}
-          disabled={!isValidEmail(email)} // 👈 Disable if email is invalid
+          disabled={!isValid || loading}
+          onPress={handleSend}
         >
-          <Text style={{ 
-            color: isValidEmail(email) ? '#fff' : '#666', 
-            textAlign: 'center', 
-            fontWeight: '600' 
-          }}>
-            Send Code
-          </Text>
+          {loading ? (
+            <ActivityIndicator size="small" color="#000" />
+          ) : (
+            <Text style={{ color: 'black', fontWeight: '600' }}>
+              Send Code
+            </Text>
+          )}
         </Button>
 
 
