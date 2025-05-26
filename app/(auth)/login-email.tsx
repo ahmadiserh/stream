@@ -10,6 +10,17 @@ export default function EmailSignUp() {
 
   const isDark = colorScheme === 'dark';
 
+  const [error, setError] = useState('');
+
+  // ✅ Validate email format
+  const isValidEmail = (email: string): boolean => {
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  };
+
+  
+
+
   return (
     <>
       <Stack.Screen 
@@ -29,7 +40,7 @@ export default function EmailSignUp() {
         <Text style={{ 
             fontSize: 25,
             fontWeight: '700', 
-            marginBottom: 10, 
+            marginBottom: 5, 
             color: isDark ? '#fff' : '#000' 
             }}>
 
@@ -39,7 +50,7 @@ export default function EmailSignUp() {
           style={{ 
             fontSize: 16,
             color: isDark ? '#fff' : '#000',
-             marginBottom: 20,  
+             marginBottom: 15,  
            }}
           >
             Log in to your account
@@ -65,35 +76,58 @@ export default function EmailSignUp() {
           onChangeText={setEmail}
         />
 
+        {error !== '' && (
+          <Text style={{ color: 'red', marginTop: 5, fontSize: 10 }}>{error}</Text>
+        )} 
+
         {/* Terms, Services and Policy */}
-        <Text style={{ 
-             textAlign: "center",
-             fontSize: 12,
-             marginTop: 15,
+        <View style={{ marginTop: 10, paddingHorizontal: 5 }}>
+          <Text style={{
+            textAlign: 'center',
+            fontSize: 12,
+            color: isDark ? '#aaa' : '#333',
+            lineHeight: 18,
           }}>
-            By continuing, you agree to Stream's{" "}
-            <Pressable onPress={() => alert("Terms of Service clicked!")}>
-            <Text style={styles.linkText}>Terms of Service</Text>
-            </Pressable>{" "}
-            and confirm that you have read Stream's{" "}
-            <Pressable onPress={() => alert("Privacy Policy clicked!")}>
-            <Text style={styles.linkText}>Privacy Policy</Text>
-            </Pressable>.
-        </Text>
+            By continuing, you agree to Stream's{' '}
+            <Text onPress={() => alert("Terms of Service clicked!")} style={styles.linkText}>
+              Terms of Service
+            </Text>{' '}
+            and confirm that you have read Stream's{' '}
+            <Text onPress={() => alert("Privacy Policy clicked!")} style={styles.linkText}>
+              Privacy Policy
+            </Text>.
+          </Text>
+        </View>
 
         {/* send button */}
-        <Button style={{ 
-            marginTop: 20,
-            borderRadius: 7
+        <Button
+          style={[
+            {
+              marginTop: 20,
+              borderRadius: 7,
+              backgroundColor: isValidEmail(email) ? '#00f' : '#ccc', // active vs disabled
+            }
+          ]}
+          onPress={() => {
+            if (!isValidEmail(email)) {
+              setError('Please enter a valid email address');
+              return;
+            }
+            setError('');
+            console.log('Email:', email);
+            // Proceed to OTP or next step
+          }}
+          disabled={!isValidEmail(email)} // 👈 Disable if email is invalid
+        >
+          <Text style={{ 
+            color: isValidEmail(email) ? '#fff' : '#666', 
+            textAlign: 'center', 
+            fontWeight: '600' 
           }}>
-            <Text style={{ 
-                color: 'black',
-                textAlign: 'center',
-                fontWeight: 600
-             }}>
-                Send Code
-            </Text>
+            Send Code
+          </Text>
         </Button>
+
 
       </View>
     </>
@@ -103,15 +137,18 @@ export default function EmailSignUp() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
+    padding: 15,
   },
-  input: {
+ input: {
     borderWidth: 1,
     padding: 12,
     borderRadius: 6,
     fontSize: 16,
+    borderColor: '#ccc', // default, will override dynamically
   },
   linkText: {
-    textDecorationLine: "underline",
-  },
+    textDecorationLine: 'underline',
+    color: '#007aff',
+    fontWeight: '500',
+  },  
 });

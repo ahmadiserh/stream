@@ -1,39 +1,43 @@
+import { useState } from 'react';
 import { Button } from "@/components/Button";
 import { useRouter } from 'expo-router';
 import { Text } from "@/components/Text";
 import { FontAwesome } from "@expo/vector-icons";
 import { Pressable, StyleSheet, TextInput, View, useColorScheme } from "react-native";
 import { Stack } from "expo-router";
-// imort useState from  
 
 export default function SignUpIndex() {
-  const router  = useRouter();
-  const colorScheme = useColorScheme(); // 👈 Detect dark or light mode
+  const router = useRouter();
+  const colorScheme = useColorScheme();
   const isDark = colorScheme === 'dark';
-  // const [phone, setPhone] = useState('');
-  
-
-  const handleSignUpWithGoggle = () => {}
-  const handleSignUpWithFacebook = () => {}
+  const [otp, setOtp] = useState('');
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
+        <Stack.Screen 
+          options={{ 
+            title: '',
+            headerBackTitleVisible: true,
+            headerStyle: {
+              height: 40,
+              backgroundColor: isDark ? '#121212' : '#fff',
+              elevation: 0,
+              shadowOpacity: 0,
+            },
+          }} 
+        />
 
       <View style={styles.container}>
         {/* Top section */}
         <View style={styles.topSection}>
-          <Text style={{ 
-            fontSize: 18 ,
-            fontWeight: 700
-           }}>
+          <Text style={{ fontSize: 18, fontWeight: "700" }}>
             Enter 4 digits code
           </Text>
           <Text style={styles.subTitleText}>
-            Your code was sent to +234 8066358744 via text message or whatsapp.
+            Your code was sent to +234 8066358744 via text message or WhatsApp.
           </Text>
 
-           /* Phone Number Text Input */}
+          {/* Phone Number Text Input */}
           <TextInput
             style={[
               styles.input,
@@ -43,16 +47,14 @@ export default function SignUpIndex() {
                 borderColor: isDark ? '#333' : '#ccc',
               },
             ]}
-            placeholder="Enter your phone number"
+            placeholder="Enter the 4-digit code"
             placeholderTextColor={isDark ? '#888' : '#999'}
-            keyboardType="phone-number"
+            keyboardType="phone-pad"
             autoCapitalize="none"
-            autoCorrect={otp}
+            autoCorrect={false}
             value={otp}
             onChangeText={setOtp}
           />
-
-
         </View>
 
         {/* Footer */}
@@ -68,7 +70,6 @@ export default function SignUpIndex() {
             </Pressable>.
           </Text>
         </View>
-
       </View>
     </>
   );
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   topSection: {
-    marginTop: 40,
+    // marginTop: 40,
   },
   titleText: {
     fontSize: 25,
@@ -119,7 +120,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     alignItems: "center",
     justifyContent: "center",
-    marginBottom: 70, 
+    // marginBottom: 70, 
   },
   linkText: {
     textDecorationLine: "underline",
@@ -129,7 +130,7 @@ const styles = StyleSheet.create({
     height: 1,
     backgroundColor: "#e0e0e0",
   },
-    input: {
+  input: {
     borderWidth: 1,
     padding: 12,
     borderRadius: 6,
