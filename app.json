@@ -16,7 +16,8 @@
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "edgeToEdgeEnabled": true
+      "edgeToEdgeEnabled": true,
+      "package": "com.ahmerthiserh.stream"
     },
     "web": {
       "bundler": "metro",
@@ -38,11 +39,16 @@
     "experiments": {
       "typedRoutes": true
     },
-
     "updates": {
       "enabled": true,
       "checkAutomatically": "ON_LOAD",
       "fallbackToCacheTimeout": 0
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d12e97d9-56b9-4184-a4d9-78b05edafc74"
+      }
     }
   }
 }
