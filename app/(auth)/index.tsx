@@ -4,6 +4,8 @@ import { Text } from "@/components/Text";
 import { FontAwesome } from "@expo/vector-icons";
 import { Pressable, StyleSheet, View } from "react-native";
 import { Stack } from "expo-router";
+import TermsNotice from '@/components/TermsNotice';
+
 
 export default function SignUpIndex() {
   const router  = useRouter();

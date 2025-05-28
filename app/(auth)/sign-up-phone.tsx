@@ -3,6 +3,7 @@ import { View, TextInput, StyleSheet, useColorScheme, Pressable, ActivityIndicat
 import { Text } from '@/components/Text';
 import { Stack, router } from 'expo-router';
 import { Button } from '@/components/Button';
+import TermsNotice from './components/TermsNotice';
 
 export default function PhoneSignUp() {
   const colorScheme = useColorScheme();
@@ -85,7 +86,7 @@ export default function PhoneSignUp() {
 
         {error && <Text style={{ color: 'red', marginTop: 5 }}>{error}</Text>}
 
-        <View style={{ marginTop: 15, paddingHorizontal: 5 }}>
+        {/* <View style={{ marginTop: 15, paddingHorizontal: 5 }}>
           <Text style={{
             textAlign: 'center',
             fontSize: 12,
@@ -101,7 +102,9 @@ export default function PhoneSignUp() {
               Privacy Policy
             </Text>.
           </Text>
-        </View>
+        </View> */}
+
+        <TermsNotice />
 
         {/* Submit Button */}
         <Button
